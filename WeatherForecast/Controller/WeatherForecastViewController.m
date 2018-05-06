@@ -41,8 +41,8 @@
     
     //Set initial State and City for UIPickerView
     NSArray *arrayCities = dictStateCity[self.selectedState];
-    [self.cityPicker selectRow:[arrayStates indexOfObject:self.selectedState] inComponent:0 animated:YES];
-    [self.cityPicker selectRow:[arrayCities indexOfObject:self.selectedCity] inComponent:1 animated:YES];
+    [self.cityPicker selectRow:[arrayStates indexOfObject:self.selectedState] inComponent:0 animated:NO];
+    [self.cityPicker selectRow:[arrayCities indexOfObject:self.selectedCity] inComponent:1 animated:NO];
     
     //Get initial Forecast
     [self getForecast];
