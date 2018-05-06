@@ -5,7 +5,7 @@ I used Test Drive Development on all production applications. TDD help me improv
 confidence that the new code that has been written does not cause any potential side effects with existing code. I do not only 
 write actual code to carry out the app's functionality but also test code that ensure my application's code does what it is 
 supposed to do. When writing test code in addition to code that carry out the app's functionality is an extra work, but it 
-should be an up-front investment to improve the quality of the application that ships to customers. 
+should be an up-front investment to improve the quality of the application that ships to customers (ensure to meet requirements, reduce code duplicates, reduce bugs).
 I analyze business requirement and user scenarios before write test code. I used Quick, Nimble in project which help me easier 
 to write test code. I also used OHHTTPStubs for Objective-C and Mockingjay for Swift to stub HTTP request, test API call with 
 local test data.
