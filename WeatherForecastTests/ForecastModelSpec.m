@@ -17,57 +17,62 @@
 @import Nimble;
 
 @interface ForecastModelSpec: QuickSpec
+
+@property(nonatomic, strong) Forecast* forecast;
+@property(nonatomic, strong) NSError* error;
+
 @end
 
 @implementation ForecastModelSpec
 
+- (void)getForecast:(NSString*)jsonFile{
+    NSError* err;
+    NSString* filePath = OHPathForFile(jsonFile, self.class);
+    NSData* data = [NSData dataWithContentsOfFile:filePath];
+    NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&err];
+    if (err) {
+        self.error = err;
+    }
+    self.forecast = [MTLJSONAdapter modelOfClass:Forecast.class fromJSONDictionary:[dict valueForKey:@"forecast"] error:&err];
+    if (err) {
+        self.error = err;
+    }
+}
+
 - (void)spec{
     [super spec];
     
+    __weak typeof(self) weakSelf = self;
     describe(@"Parsing JSON to model", ^{
+        beforeEach(^{
+            self.forecast = nil;
+            self.error = nil;
+        });
+        
         // Success when parse valid model
         context(@"Success", ^{
             it(@"Return valid Forecase object", ^{
-                NSError* error;
-                NSString* validFile = OHPathForFile(@"valid_model.json", self.class);
-                NSData* data = [NSData dataWithContentsOfFile:validFile];
-                NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-                
-                Forecast* forecast = [MTLJSONAdapter modelOfClass:Forecast.class fromJSONDictionary:[dict valueForKey:@"forecast"] error:&error];
-                
-                expect(error).to(beNil());
-                expect(forecast).notTo(beNil());
-                expect(forecast.forecastDays.count).to(equal(4));
+                [weakSelf getForecast:@"valid_model.json"];
+                expect(weakSelf.error).to(beNil());
+                expect(weakSelf.forecast).notTo(beNil());
+                expect(weakSelf.forecast.forecastDays.count).to(equal(4));
             });
         });
         
         // Fail when parse invalid model
         context(@"Fail", ^{
             it(@"Return a nil object because parsing invalid model", ^{
-                NSError* error;
-                NSString* invalidModelFile = OHPathForFile(@"invalid_model.json", self.class);
-                NSData* data = [NSData dataWithContentsOfFile:invalidModelFile];
-                NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-                
-                Forecast* forecast = [MTLJSONAdapter modelOfClass:Forecast.class fromJSONDictionary:[dict valueForKey:@"forecast"] error:&error];
-                
-                expect(forecast).to(beNil());
+                [self getForecast:@"invalid_model.json"];
+                expect(weakSelf.forecast).to(beNil());
             });
         });
         
         // Fail when parse invalid format json file
         context(@"Fail", ^{
             it(@"Return an Error because parsing invalid format file", ^{
-                NSError* error;
-                NSString* invalidFormatFile = OHPathForFile(@"invalid_format.json", self.class);
-                NSData* data = [NSData dataWithContentsOfFile:invalidFormatFile];
-                NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-                
-                expect(error).notTo(beNil());
-                
-                Forecast* forecast = [MTLJSONAdapter modelOfClass:Forecast.class fromJSONDictionary:[dict valueForKey:@"forecast"] error:&error];
-                
-                expect(forecast).to(beNil());
+                [weakSelf getForecast:@"invalid_format.json"];
+                expect(weakSelf.error).notTo(beNil());
+                expect(weakSelf.forecast).to(beNil());
             });
         });
     });
