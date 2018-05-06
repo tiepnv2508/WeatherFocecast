@@ -13,7 +13,7 @@
 extern NSString* const BASE_URL;
 extern NSString* const GET_FORECAST_BY_CITY_API;
 
-+ (id)sharedAPIClient;
++ (id)sharedInstance;
 
 - (void)getWeatherForecastByCity:(NSString*)city state:(NSString*)state success:(void(^)(id responseData))success failure:(void(^)(NSError* error))failure;
 

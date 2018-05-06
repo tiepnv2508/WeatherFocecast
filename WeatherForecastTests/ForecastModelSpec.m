@@ -25,7 +25,7 @@
 
 @implementation ForecastModelSpec
 
-- (void)getForecast:(NSString*)jsonFile{
+- (void)getForecast:(NSString*)jsonFile {
     NSError* err;
     NSString* filePath = OHPathForFile(jsonFile, self.class);
     NSData* data = [NSData dataWithContentsOfFile:filePath];
@@ -53,6 +53,7 @@
         context(@"Success", ^{
             it(@"Return valid Forecase object", ^{
                 [weakSelf getForecast:@"valid_model.json"];
+                
                 expect(weakSelf.error).to(beNil());
                 expect(weakSelf.forecast).notTo(beNil());
                 expect(weakSelf.forecast.forecastDays.count).to(equal(4));
@@ -63,6 +64,7 @@
         context(@"Fail", ^{
             it(@"Return a nil object because parsing invalid model", ^{
                 [self getForecast:@"invalid_model.json"];
+                
                 expect(weakSelf.forecast).to(beNil());
             });
         });
@@ -71,6 +73,7 @@
         context(@"Fail", ^{
             it(@"Return an Error because parsing invalid format file", ^{
                 [weakSelf getForecast:@"invalid_format.json"];
+                
                 expect(weakSelf.error).notTo(beNil());
                 expect(weakSelf.forecast).to(beNil());
             });

@@ -15,7 +15,7 @@
 
 @end
 
-@implementation WeatherForecastViewController{
+@implementation WeatherForecastViewController {
     NSDictionary *dictStateCity;
     NSArray *arrayStates;
 }
@@ -31,12 +31,12 @@
     self.selectedState = @"Michigan";
 }
 
-- (void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self loadCityStateData];
 }
 
-- (void)viewDidAppear:(BOOL)animated{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
     //Set initial State and City for UIPickerView
@@ -48,14 +48,14 @@
     [self getForecast];
 }
 
-- (void)loadCityStateData{
+- (void)loadCityStateData {
     NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
     NSString *dataFile = [[NSBundle mainBundle] pathForResource:@"StateCity" ofType:@".json"];
     NSData *data = [NSData dataWithContentsOfFile:dataFile];
     NSError *error;
     dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     
-    if (error){
+    if (error) {
         NSLog(@"Parse JSON failed: %@",error.localizedDescription);
         return;
     }
@@ -64,8 +64,8 @@
     dictStateCity = dict;
 }
 
-- (void)getForecast{
-    if (!self.lbError.isHidden){
+- (void)getForecast {
+    if (!self.lbError.isHidden) {
         [self.lbError setHidden:YES];
     }
     self.forecast = nil;
@@ -73,34 +73,34 @@
     [self.activityIndicatorView startAnimating];
     
     __weak typeof(self) weakSelf = self;
-    [[WeatherForecastAPIClient sharedAPIClient] getWeatherForecastByCity:self.selectedCity state:self.selectedState success:^(id responseData){
+    [[WeatherForecastAPIClient sharedInstance] getWeatherForecastByCity:self.selectedCity state:self.selectedState success:^(id responseData) {
         weakSelf.forecast = responseData;
         [weakSelf.activityIndicatorView stopAnimating];
         [weakSelf.tableView reloadData];
-    } failure:^(NSError *error){
+    } failure:^(NSError *error) {
         [weakSelf.activityIndicatorView stopAnimating];
         [weakSelf.lbError setText:error.localizedDescription];
         [weakSelf.lbError setHidden:NO];
     }];
 }
 
-- (IBAction)btnForecastTapped:(id)sender{
+- (IBAction)btnForecastTapped:(id)sender {
     [self getForecast];
 }
 
 #pragma mark UISegmentedControl
 
-- (IBAction)segmentDidChange:(id)sender{
+- (IBAction)segmentDidChange:(id)sender {
     [self.tableView reloadData];
 }
 
 #pragma mark UITableViewDataSource
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.forecast.forecastDays.count;
 }
 
-- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ForecastDay *forecastDay = self.forecast.forecastDays[indexPath.row];
     WeatherForecastTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WeatherForecastTableViewCell" forIndexPath:indexPath];
     
@@ -117,32 +117,31 @@
 }
 
 - (NSInteger)pickerView:(nonnull UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    if (component == 0){
+    if (component == 0) {
         return arrayStates.count;
-    }else{
+    } else {
         NSArray *arrayCities = dictStateCity[self.selectedState];
         return arrayCities.count;
     }
 }
 
-- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
+- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     if (component == 0) {
         return arrayStates[row];
-    }else{
+    } else {
         return dictStateCity[self.selectedState][row];
     }
 }
 
 #pragma mark UIPickerViewDelegate
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     if (component == 0) {
         //Reload City Component when did change State Component
         self.selectedState = arrayStates[row];
         [self.cityPicker reloadComponent:1];
         NSUInteger citySelectedRow = [self.cityPicker selectedRowInComponent:1];
         self.selectedCity = dictStateCity[self.selectedState][citySelectedRow];
-    }else{
+    } else {
         self.selectedCity = dictStateCity[self.selectedState][row];
     }
 }

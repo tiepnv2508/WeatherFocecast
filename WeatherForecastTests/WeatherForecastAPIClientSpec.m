@@ -30,17 +30,17 @@
 - (void)getForecast:(NSString*)jsonFile city:(NSString*)city state:(NSString*)state {
     __weak typeof(self) weakSelf = self;
     
-    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request){
+    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
         NSString *stringAPI = [NSString stringWithFormat:GET_FORECAST_BY_CITY_API,FORECAST_API_KEY,state,city];
         return [request.URL.relativePath isEqualToString:stringAPI];
-    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *reques){
+    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *reques) {
         NSString *fixture = OHPathForFile(jsonFile, weakSelf.class);
         return [OHHTTPStubsResponse responseWithFileAtPath:fixture statusCode:200 headers:@{@"Content-Type": @"application/json"}];
     }];
     
-    [[WeatherForecastAPIClient sharedAPIClient] getWeatherForecastByCity:city state:state success:^(id responseData){
+    [[WeatherForecastAPIClient sharedInstance] getWeatherForecastByCity:city state:state success:^(id responseData) {
         weakSelf.forecast = responseData;
-    } failure:^(NSError *err){
+    } failure:^(NSError *err) {
         weakSelf.error = err;
     }];
 }
@@ -71,7 +71,7 @@
             it(@"Return an error because invalid city name", ^{
                 [self getForecast:@"seattl_error.json" city:@"Seattl" state:@"Washington"];
                 
-                expect(self.forecast).to(beNil());
+                expect(self.forecast).toEventually(beNil());
                 expect(self.error).toEventuallyNot(beNil());
             });
         });

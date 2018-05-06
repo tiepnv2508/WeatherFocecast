@@ -31,13 +31,13 @@
     self.lowTemp = @"";
 }
 
-- (void)setForecastDay:(ForecastDay*)forecastDay tempScale:(NSString*)tempScale{
+- (void)setForecastDay:(ForecastDay*)forecastDay tempScale:(NSString*)tempScale {
     self.lbDate.text = forecastDay.forecastDate.weekDay;
     self.lbConditions.text = forecastDay.conditions;
     if ([tempScale isEqualToString:FAHRENHEIT]) {
         self.highTemp = forecastDay.highTemperature.fahrenheit;
         self.lowTemp = forecastDay.lowTemperature.fahrenheit;
-    }else{
+    } else {
         self.highTemp = forecastDay.highTemperature.celsius;
         self.lowTemp = forecastDay.lowTemperature.celsius;
     }

@@ -25,7 +25,7 @@
 + (NSValueTransformer*)JSONTransformerForKey:(NSString *)key{
     if ([key isEqualToString:@"lowTemperature"] || [key isEqualToString:@"highTemperature"]) {
         return [MTLJSONAdapter dictionaryTransformerWithModelClass:Temperature.class];
-    }else if ([key isEqualToString:@"forecastDate"]){
+    } else if ([key isEqualToString:@"forecastDate"]) {
         return [MTLJSONAdapter dictionaryTransformerWithModelClass:Date.class];
     }
     return nil;

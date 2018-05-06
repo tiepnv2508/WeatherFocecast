@@ -23,63 +23,63 @@ NSString* const GET_FORECAST_BY_CITY_API = @"%@/forecast/q/%@/%@.json";
 @implementation WeatherForecastAPIClient
 
 - (id)init{
-    if (self == [super init]){
+    if (self == [super init]) {
         self.sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
     }
     
     return self;
 }
 
-+ (id)sharedAPIClient{
-    static WeatherForecastAPIClient* sharedClient = nil;
++ (id)sharedInstance {
+    static WeatherForecastAPIClient* sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedClient = [[self alloc] init];
+        sharedInstance = [[self alloc] init];
     });
-    return sharedClient;
+    return sharedInstance;
 }
 
-- (void)getWeatherForecastByCity:(NSString*)city state:(NSString*)state success:(void(^)(id responseData))success failure:(void(^)(NSError* error))failure{
+- (void)getWeatherForecastByCity:(NSString*)city state:(NSString*)state success:(void(^)(id responseData))success failure:(void(^)(NSError* error))failure {
     //Build API URL
     NSString* stringAPI = [NSString stringWithFormat:GET_FORECAST_BY_CITY_API,FORECAST_API_KEY,state,city];
     NSString* stringAPIEncoded = [stringAPI stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
     //Call API
-    [self.sessionManager GET:stringAPIEncoded parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id _Nullable responseObject){
+    [self.sessionManager GET:stringAPIEncoded parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id _Nullable responseObject) {
         NSError* error = nil;
         id forecast = [MTLJSONAdapter modelOfClass:Forecast.class fromJSONDictionary:[responseObject valueForKey:@"forecast"] error:&error];
         
         if (error) {
             //Occur error when do JSON parser to model
-            if (failure){
+            if (failure) {
                 failure(error);
             }
-        }else{
-            if (forecast == nil){
+        } else {
+            if (forecast == nil) {
                 //Analyze error return from server
                 NSDictionary* dictError = [responseObject valueForKeyPath:@"response.error"];
-                if (dictError){
+                if (dictError) {
                     error = [[NSError alloc] initWithDomain:[dictError valueForKey:@"type"]
                                                        code:404
                                                    userInfo:@{NSLocalizedDescriptionKey : [dictError valueForKey:@"description"]}];
-                }else{
+                } else {
                     error = [[NSError alloc] initWithDomain:@"No results for this city!"
                                                        code:404
                                                    userInfo:@{NSLocalizedDescriptionKey : @"No results for this city!"}];
                 }
                 if (error) {
-                    if (failure){
+                    if (failure) {
                         failure(error);
                     }
                 }
-            }else{
+            } else {
                 //Success
                 if (success) {
                     success(forecast);
                 }
             }
         }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (failure) {
             failure(error);
         }

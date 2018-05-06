@@ -16,7 +16,7 @@
 }
 
 + (NSValueTransformer*)JSONTransformerForKey:(NSString *)key {
-    if([key isEqualToString:@"forecastDays"]){
+    if ([key isEqualToString:@"forecastDays"]) {
         return [MTLJSONAdapter arrayTransformerWithModelClass:ForecastDay.class];
     }
     return nil;
