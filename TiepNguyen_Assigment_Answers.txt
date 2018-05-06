@@ -1,14 +1,23 @@
 1) Describe your experience with Test Driven Development on a production application.
 
 Answer:
-I used Test Drive Development on all production applications. TDD help me improve the quality of code so much. It provide some confidence that the new code that has been written does not cause any potential side effects with existing code. I do not only write actual code to carry out the app's functionality but also test code that ensure my application's code does what it is supposed to do. When writing test code in addition to code that carry out the app's functionality is an extra work, but it should be an up-front investment to improve the quality of the application that ships to customers. 
-I analyze business requirement and user scenarios before write test code. I used Quick, Nimble in project which help me easier to write test code. I also used OHHTTPStubs for Objective-C and Mockingjay for Swift to stub HTTP request, test API call with local test data.
+I used Test Drive Development on all production applications. TDD help me improve the quality of code so much. It provide some 
+confidence that the new code that has been written does not cause any potential side effects with existing code. I do not only 
+write actual code to carry out the app's functionality but also test code that ensure my application's code does what it is 
+supposed to do. When writing test code in addition to code that carry out the app's functionality is an extra work, but it 
+should be an up-front investment to improve the quality of the application that ships to customers. 
+I analyze business requirement and user scenarios before write test code. I used Quick, Nimble in project which help me easier 
+to write test code. I also used OHHTTPStubs for Objective-C and Mockingjay for Swift to stub HTTP request, test API call with 
+local test data.
 
 2) Describe a part of the iOS SDK you learned recently. What excited you
 about it? How did you go about it?
 
 Answer:
-I learned about Rating Controller in iOS 11. The controller is a part of the iOS SDK called the SKStoreReviewController, and it's available in the StoreKit library. I researched about it when I need to improve my person application's rating on AppStore. I learned how to use it at https://developer.apple.com/documentation. I'm excited about it because it's an awesome and elegant way to request a rating/review from users, it improves user experience for iOS application so much.
+I learned about Rating Controller in iOS 11. The controller is a part of the iOS SDK called the SKStoreReviewController, and 
+it's available in the StoreKit library. I researched about it when I need to improve my person application's rating on AppStore.
+I learned how to use it at https://developer.apple.com/documentation. I'm excited about it because it's an awesome and elegant 
+way to request a rating/review from users, it improves user experience for iOS application so much.
 
 Tiep Nguyen
 Email: tiepnguyen3333@gmail.com
