@@ -29,9 +29,6 @@
     //initialize state and city
     self.selectedCity = @"DETROIT";
     self.selectedState = @"Michigan";
-    
-    //Get initial Forecast
-    [self getForecast];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -42,10 +39,13 @@
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
-    //
+    //Set initial State and City for UIPickerView
     NSArray *arrayCities = dictStateCity[self.selectedState];
     [self.cityPicker selectRow:[arrayStates indexOfObject:self.selectedState] inComponent:0 animated:YES];
     [self.cityPicker selectRow:[arrayCities indexOfObject:self.selectedCity] inComponent:1 animated:YES];
+    
+    //Get initial Forecast
+    [self getForecast];
 }
 
 - (void)loadCityStateData{
