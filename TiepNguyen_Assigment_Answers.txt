@@ -7,9 +7,16 @@ write actual code to carry out the app's functionality but also test code that e
 supposed to do. When writing test code in addition to code that carry out the app's functionality is an extra work, but it 
 should be an up-front investment to improve the quality of the application that ships to customers (ensure to meet
 requirements, reduce code duplicates, reduce bugs).
+
 I analyze business requirement and user scenarios before write test code. I used Quick, Nimble in project which help me easier 
 to write test code. I also used OHHTTPStubs for Objective-C and Mockingjay for Swift to stub HTTP request, test API call with 
 local test data.
+
+Step by step when I do TDD:
++ Write edge cases tests first.
++ Write failure tests
++ Then write minimum implementation code to make test case pass.
++ Refactor code to reduce repetition and make code readable.
 
 2) Describe a part of the iOS SDK you learned recently. What excited you
 about it? How did you go about it?
