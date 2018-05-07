@@ -52,10 +52,8 @@
         beforeEach(^{
             self.forecast = nil;
             self.error = nil;
-            [OHHTTPStubs removeAllStubs];
         });
         
-        //Success when test an success json file.
         context(@"Success", ^{
             it(@"Return a valid Forcecast object", ^{
                 [self getForecast:@"seattle_success.json" city:@"Seattle" state:@"Washington"];
@@ -66,7 +64,6 @@
             });
         });
         
-        //Fail when test an error json file
         context(@"Fail", ^{
             it(@"Return an error because invalid city name", ^{
                 [self getForecast:@"seattl_error.json" city:@"Seattl" state:@"Washington"];
