@@ -49,8 +49,7 @@
             self.error = nil;
         });
         
-        // Success when parse valid model
-        context(@"Success", ^{
+        context(@"Parsing valid model", ^{
             it(@"Return valid Forecase object", ^{
                 [weakSelf getForecast:@"valid_model.json"];
                 
@@ -60,8 +59,7 @@
             });
         });
         
-        // Fail when parse invalid model
-        context(@"Fail", ^{
+        context(@"Parsing invalid model", ^{
             it(@"Return a nil object because parsing invalid model", ^{
                 [self getForecast:@"invalid_model.json"];
                 
@@ -69,8 +67,7 @@
             });
         });
         
-        // Fail when parse invalid format json file
-        context(@"Fail", ^{
+        context(@"Parsing invalid format JSON file", ^{
             it(@"Return an Error because parsing invalid format file", ^{
                 [weakSelf getForecast:@"invalid_format.json"];
                 

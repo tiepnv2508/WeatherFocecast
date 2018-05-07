@@ -4,7 +4,8 @@
 target 'WeatherForecast' do
   # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
   # use_frameworks!
-
+  inhibit_all_warnings!
+  
   # Pods for WeatherForecast
   pod 'AFNetworking'
   pod 'SDWebImage'
