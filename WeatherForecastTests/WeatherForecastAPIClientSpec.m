@@ -54,6 +54,10 @@
             self.error = nil;
         });
         
+        afterEach(^{
+            [OHHTTPStubs removeAllStubs];
+        });
+        
         context(@"Call API with correct params", ^{
             it(@"Return a valid Forcecast object", ^{
                 [self getForecast:@"seattle_success.json" city:@"Seattle" state:@"Washington"];
