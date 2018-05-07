@@ -16,7 +16,8 @@ Step by step when I do TDD:
 + Write failure tests.
 + Then write minimum implementation code to make test case pass.
 + Run the test, it should pass, if not check the code again.
-+ Refactor code in the way of simplificatiom. Rename classes to be more descriptive, update test to be more descriptive, remove repetition code, unused variables.
++ Refactor code in the way of simplificatiom. Rename classes to be more descriptive, update test to be more descriptive, 
+remove repetition code, unused variables.
 
 2) Describe a part of the iOS SDK you learned recently. What excited you
 about it? How did you go about it?
