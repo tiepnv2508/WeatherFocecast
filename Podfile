@@ -6,16 +6,16 @@ target 'WeatherForecast' do
   # use_frameworks!
 
   # Pods for WeatherForecast
-  pod 'AFNetworking', inhibit_warnings: true
-  pod 'SDWebImage', inhibit_warnings: true
-  pod 'Mantle', inhibit_warnings: true
+  pod 'AFNetworking'
+  pod 'SDWebImage'
+  pod 'Mantle'
 
   target 'WeatherForecastTests' do
     inherit! :search_paths
     # Pods for testing
-    pod 'Quick', inhibit_warnings: true
-    pod 'Nimble', inhibit_warnings: true
-    pod 'OHHTTPStubs', inhibit_warnings: true
+    pod 'Quick'
+    pod 'Nimble'
+    pod 'OHHTTPStubs'
   end
 
 end
